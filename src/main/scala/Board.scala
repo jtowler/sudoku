@@ -36,6 +36,14 @@ class Board(val tiles: List[List[Char]]) {
 
   }
 
+  def update(x: Int, y: Int, v: Char): Board = {
+    new Board(List.tabulate(9, 9){
+      case (b, a) =>
+        if (b == y && a == x) v
+        else tiles(b)(a)
+    })
+  }
+
 }
 
 object Board {

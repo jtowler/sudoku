@@ -29,4 +29,11 @@ class BoardTest extends FlatSpec with Matchers {
     onTest.validate() shouldBe false
   }
 
+  behavior of "update"
+  it should "update value of tiles" in {
+    val onTest = Board().update(1, 3, '2').update(4, 7, '3')
+    onTest.tiles(3)(1) shouldBe '2'
+    onTest.tiles(7)(4) shouldBe '3'
+  }
+
 }
