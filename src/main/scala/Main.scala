@@ -1,5 +1,5 @@
 object Main extends App {
 
-  Game.loop(Board())
+  Game.loop(new Board(Examples.easy))
 
 }
