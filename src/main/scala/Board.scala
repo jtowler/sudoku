@@ -1,6 +1,6 @@
 import scala.collection.immutable
 
-class Board(val tiles: List[List[Char]]) {
+class Board(val tiles: List[List[Char]], val fixedTiles: List[List[Char]]) {
 
   lazy val squares: immutable.IndexedSeq[List[Char]] = for {
     x <- 0 to 6 by 3
@@ -53,18 +53,24 @@ class Board(val tiles: List[List[Char]]) {
   }
 
   def update(x: Int, y: Int, v: Char): Board = {
-    new Board(List.tabulate(9, 9){
-      case (b, a) =>
-        if (b == y && a == x) v
-        else tiles(b)(a)
-    })
+    if (fixedTiles(y)(x) != ' ') this
+    else
+      new Board(
+        List.tabulate(9, 9) {
+          case (b, a) =>
+            if (b == y && a == x) v
+            else tiles(b)(a)
+        },
+        fixedTiles
+      )
   }
 
 }
 
 object Board {
-  def apply(): Board =
-    new Board(
-      List.tabulate(9, 9)((_, _) => ' ')
-  )
+  def apply(): Board = Board(List.tabulate(9, 9)((_, _) => ' '))
+
+  def apply(tiles: List[List[Char]]): Board = {
+    new Board(tiles, tiles)
+  }
 }

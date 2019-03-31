@@ -12,8 +12,8 @@ class BoardTest extends FlatSpec with Matchers {
     val emptyLine = List.tabulate(9)(_ => ' ')
     val badLine = List.tabulate(9)(i => if (i > 2) ' ' else '1')
     val tiles = List.tabulate(9)(i => if (i == 5) badLine else emptyLine)
-    val onTest = new Board(tiles)
-    val onTestTranspose = new Board(tiles)
+    val onTest = Board(tiles)
+    val onTestTranspose = Board(tiles)
     onTest.validate() shouldBe false
     onTestTranspose.validate() shouldBe false
   }
@@ -22,7 +22,7 @@ class BoardTest extends FlatSpec with Matchers {
     val emptyLine = List.tabulate(9)(_ => ' ')
     val badLine1 = List.tabulate(9)(i => if (i == 7) '1' else ' ')
     val badLine2 = List.tabulate(9)(i => if (i == 8) '1' else ' ')
-    val onTest = new Board(List.tabulate(9){i =>
+    val onTest = Board(List.tabulate(9){i =>
       if (i == 7) badLine1
       else if (i == 8) badLine2
       else emptyLine})
@@ -31,7 +31,7 @@ class BoardTest extends FlatSpec with Matchers {
 
   behavior of "hasWon"
   it should "identify a complete and valid board" in {
-    val onTest = new Board(List(
+    val onTest = Board(List(
       List('5', '3', '4', '6', '7', '8', '9', '1', '2'),
       List('6', '7', '2', '1', '9', '5', '3', '4', '8'),
       List('1', '9', '8', '3', '4', '2', '5', '6', '7'),
