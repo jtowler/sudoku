@@ -1,11 +1,6 @@
-import scala.collection.immutable
-
 class Board(val tiles: List[List[Char]], val fixedTiles: List[List[Char]], val autoValidate: Boolean = false) {
 
-  lazy val squares: immutable.IndexedSeq[List[Char]] = for {
-    x <- 0 to 6 by 3
-    y <- 0 to 6 by 3
-  } yield tiles.slice(x, x + 3).flatMap(_.slice(y, y + 3))
+  lazy val squares: List[List[Char]] = Utils.fromSquares(tiles)
 
   def display(): Unit = {
 
@@ -34,7 +29,7 @@ class Board(val tiles: List[List[Char]], val fixedTiles: List[List[Char]], val a
         }
     }
 
-    validate() && check(tiles) && check(tiles.transpose) && check(squares.toList)
+    validate() && check(tiles) && check(tiles.transpose) && check(squares)
 
   }
 
@@ -48,7 +43,7 @@ class Board(val tiles: List[List[Char]], val fixedTiles: List[List[Char]], val a
         }
     }
 
-    check(tiles) && check(tiles.transpose) && check(squares.toList)
+    check(tiles) && check(tiles.transpose) && check(squares)
 
   }
 
