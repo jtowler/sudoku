@@ -1,6 +1,6 @@
 import scala.collection.immutable
 
-class Board(val tiles: List[List[Char]], val fixedTiles: List[List[Char]]) {
+class Board(val tiles: List[List[Char]], val fixedTiles: List[List[Char]], val autoValidate: Boolean = false) {
 
   lazy val squares: immutable.IndexedSeq[List[Char]] = for {
     x <- 0 to 6 by 3
@@ -55,15 +55,21 @@ class Board(val tiles: List[List[Char]], val fixedTiles: List[List[Char]]) {
   def update(x: Int, y: Int, v: Char): Board = {
     val c = if (v.isDigit) v else ' '
     if (fixedTiles(y)(x) != ' ') this
-    else
-      new Board(
+    else {
+      val newBoard = new Board(
         List.tabulate(9, 9) {
           case (b, a) =>
             if (b == y && a == x) c
             else tiles(b)(a)
         },
-        fixedTiles
+        fixedTiles,
+        autoValidate
       )
+      if (autoValidate && !newBoard.validate())
+        this
+      else
+        newBoard
+    }
   }
 
 }
@@ -73,5 +79,9 @@ object Board {
 
   def apply(tiles: List[List[Char]]): Board = {
     new Board(tiles, tiles)
+  }
+
+  def apply(tiles: List[List[Char]], autoValidate: Boolean): Board = {
+    new Board(tiles, tiles, autoValidate)
   }
 }
