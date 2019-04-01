@@ -53,12 +53,13 @@ class Board(val tiles: List[List[Char]], val fixedTiles: List[List[Char]]) {
   }
 
   def update(x: Int, y: Int, v: Char): Board = {
+    val c = if (v.isDigit) v else ' '
     if (fixedTiles(y)(x) != ' ') this
     else
       new Board(
         List.tabulate(9, 9) {
           case (b, a) =>
-            if (b == y && a == x) v
+            if (b == y && a == x) c
             else tiles(b)(a)
         },
         fixedTiles

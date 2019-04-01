@@ -70,4 +70,11 @@ class BoardTest extends FlatSpec with Matchers {
     onTest2.tiles(7)(7) shouldBe '1'
   }
 
+  it should "remove tiles if given a non digit character" in {
+    val onTest = Board().update(1, 3, '2')
+    onTest.tiles(3)(1) shouldBe '2'
+    val onTest2 = onTest.update(1, 3, 'a')
+    onTest2.tiles(3)(1) shouldBe ' '
+  }
+
 }
