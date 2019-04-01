@@ -5,7 +5,7 @@ import javafx.scene.shape.Line
 import javafx.scene.text.Text
 import javafx.stage.Stage
 
-class UITest extends Application {
+class UI extends Application {
 
   var board = Board(Examples.easy, autoValidate = true)
   val fullSize = 270
@@ -40,7 +40,6 @@ class UITest extends Application {
           }
         }
       }
-    if (board.hasWon) println("GAME WON")
     })
 
     (tileSize until fullSize by tileSize) foreach {
@@ -59,7 +58,7 @@ class UITest extends Application {
 
     labels.foreach(x => x.foreach(y => root.getChildren.add(y)))
 
-    primaryStage.setTitle("Rectangle Test")
+    primaryStage.setTitle("Sudoku Solver")
     primaryStage.setScene(scene)
     primaryStage.show()
   }
