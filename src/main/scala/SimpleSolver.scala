@@ -57,6 +57,7 @@ object SimpleSolver {
   def solveAsMuchAsPossible(tiles: List[List[Char]]): List[List[Char]] = {
     val intermediateTiles = fillInAllMissings(tiles)
     val newTiles = fillInAllMissings(intermediateTiles.transpose).transpose
+//    val newerTiles = solveAllSquares(newTiles)
     if (newTiles == tiles) newTiles
     else solveAsMuchAsPossible(newTiles)
   }
