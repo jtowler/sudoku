@@ -73,7 +73,9 @@ object SimpleSolver {
 
   def solveOnce(tiles: List[List[Char]]): List[List[Char]] = {
     val intermediateTiles = fillInAllMissings(tiles)
+    if (intermediateTiles != tiles) return intermediateTiles
     val newTiles = fillInAllMissings(intermediateTiles.transpose).transpose
+    if (newTiles != intermediateTiles) return newTiles
     solveAllSquares(newTiles)
   }
 

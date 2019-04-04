@@ -51,7 +51,6 @@ class UI extends Application {
           }
         }
       }
-
       else if (c == 's') {
         solve()
       }
