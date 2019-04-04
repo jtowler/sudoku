@@ -46,6 +46,22 @@ class SimpleSolverTest extends FlatSpec with Matchers {
     val result = '4'+:Examples.easy(6).tail
     onTest shouldBe result
   }
+
+  behavior of "solveSquare"
+  it should "complete a board of characters with squares that have one missing value" in {
+    val onTest = SimpleSolver.solveSquare(Examples.easy, 0, 6, '7')
+    val result = Examples.easy.zipWithIndex.map{
+      case (line, i) => line.zipWithIndex.map{
+        case (tile, j) =>
+          if ((i, j) == (8, 2)) '7'
+        else
+            tile
+      }
+    }
+    onTest shouldBe result
+  }
+
+
 //
 //  behavior of "fillInAllMissings"
 //  it should "complete a board of characters as much as possible" in {

@@ -17,13 +17,24 @@ object SimpleSolver {
   def solveSquare(tiles: List[List[Char]], x: Int, y: Int, value: Char): List[List[Char]] = {
     val iX = (x / 3) * 3
     val iY = (y / 3) * 3
-    val ys =  tiles.slice(iY, iY + 3).zipWithIndex.filter{case (line, _) => line contains value}.map(_._2)
-    val xs =  tiles.transpose.slice(iX, iX + 3).zipWithIndex.filter{case (line, _) => line contains value}.map(_._2)
-    if (xs.size == 1 && ys.size == 1) {
-      tiles.zipWithIndex.map{
-        case (line, j) => line.zipWithIndex.map{
+    val square = Utils.getSquare(tiles, x, y)
+    val freeTiles = for {
+      i <- square.indices
+      j <- square.head.indices
+      if square(i)(j) == ' '} yield (i + iY, j + iX)
+
+    val ys = tiles.slice(iY, iY + 3).zipWithIndex.filter { case (line, _) => line contains value }.map(_._2 + iY)
+    val xs = tiles.transpose.slice(iX, iX + 3).zipWithIndex.filter { case (line, _) => line contains value }.map(_._2 + iX)
+
+    val candidateTiles = freeTiles.filterNot {
+      case (i, j) => (ys contains i) || (xs contains j)
+    }
+
+    if (candidateTiles.size == 1) {
+      tiles.zipWithIndex.map {
+        case (line, j) => line.zipWithIndex.map {
           case (tile, i) =>
-            if ((i, j) == (xs.head, ys.head)) value
+            if ((i, j) == (candidateTiles.head._2, candidateTiles.head._1)) value
             else tile
         }
       }
@@ -57,7 +68,7 @@ object SimpleSolver {
   def solveAsMuchAsPossible(tiles: List[List[Char]]): List[List[Char]] = {
     val intermediateTiles = fillInAllMissings(tiles)
     val newTiles = fillInAllMissings(intermediateTiles.transpose).transpose
-//    val newerTiles = solveAllSquares(newTiles)
+    //    val newerTiles = solveAllSquares(newTiles)
     if (newTiles == tiles) newTiles
     else solveAsMuchAsPossible(newTiles)
   }
@@ -78,7 +89,7 @@ object SimpleSolver {
     val missingVals = Utils.labels.filterNot(line contains _)
 
     val newLine = loop(line, missingVals)
-    tiles.zipWithIndex.map{ case (t, i) => if (i == row) newLine else t}
+    tiles.zipWithIndex.map { case (t, i) => if (i == row) newLine else t }
   }
 
 
