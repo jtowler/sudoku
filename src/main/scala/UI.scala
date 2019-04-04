@@ -22,6 +22,17 @@ class UI extends Application {
 
   override def start(primaryStage: Stage) {
 
+    def solve(): Unit = {
+      val tmpTiles = board.tiles
+      board = board.solveOnce
+      board.tiles.zipWithIndex.foreach { case (line, i) =>
+        line.zipWithIndex.foreach { case (tile, j) =>
+          labels(i)(j).setText(tile.toString)
+        }
+      }
+      if (tmpTiles != board.tiles) solve()
+    }
+
     val root = new AnchorPane()
     root.setOnMouseClicked(x => {
       clickX = (x.getSceneX / tileSize).toInt
@@ -42,12 +53,7 @@ class UI extends Application {
       }
 
       else if (c == 's') {
-        board = board.solve
-        board.tiles.zipWithIndex.foreach { case (line, i) =>
-          line.zipWithIndex.foreach { case (tile, j) =>
-            labels(i)(j).setText(tile.toString)
-          }
-        }
+        solve()
       }
     })
 

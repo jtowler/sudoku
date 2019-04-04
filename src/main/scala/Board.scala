@@ -3,6 +3,7 @@ class Board(val tiles: List[List[Char]], val fixedTiles: List[List[Char]], val a
   lazy val squares: List[List[Char]] = Utils.fromSquares(tiles)
 
   def solve: Board = new Board(SimpleSolver.solveAsMuchAsPossible(tiles), fixedTiles, autoValidate)
+  def solveOnce: Board = new Board(SimpleSolver.solveOnce(tiles), fixedTiles, autoValidate)
 
   def display(): Unit = {
 
