@@ -40,6 +40,15 @@ class UI extends Application {
           }
         }
       }
+
+      else if (c == 's') {
+        board = board.solve
+        board.tiles.zipWithIndex.foreach { case (line, i) =>
+          line.zipWithIndex.foreach { case (tile, j) =>
+            labels(i)(j).setText(tile.toString)
+          }
+        }
+      }
     })
 
     (tileSize until fullSize by tileSize) foreach {
