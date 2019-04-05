@@ -17,21 +17,25 @@ class UI extends Application {
     }
   }
 
+  def setTiles(): Unit = {
+    board.tiles.zipWithIndex.foreach { case (line, i) =>
+      line.zipWithIndex.foreach { case (tile, j) =>
+        labels(i)(j).setText(tile.toString)
+      }
+    }
+  }
+
+  def solve(): Unit = {
+    val tmpTiles = board.tiles
+    board = board.solveOnce
+    setTiles()
+    if (tmpTiles != board.tiles) solve()
+  }
+
   private var clickX: Int = -1
   private var clickY: Int = -1
 
   override def start(primaryStage: Stage) {
-
-    def solve(): Unit = {
-      val tmpTiles = board.tiles
-      board = board.solveOnce
-      board.tiles.zipWithIndex.foreach { case (line, i) =>
-        line.zipWithIndex.foreach { case (tile, j) =>
-          labels(i)(j).setText(tile.toString)
-        }
-      }
-      if (tmpTiles != board.tiles) solve()
-    }
 
     val root = new AnchorPane()
     root.setOnMouseClicked(x => {
@@ -43,16 +47,16 @@ class UI extends Application {
     val scene = new Scene(root, fullSize, fullSize)
     scene.setOnKeyReleased(k => {
       val c = k.getText.head
-      if (clickX >= 0 && clickY >= 0) {
+      if (c.isDigit & clickX >= 0 && clickY >= 0) {
         board = board.update(clickX, clickY, c)
-        board.tiles.zipWithIndex.foreach { case (line, i) =>
-          line.zipWithIndex.foreach { case (tile, j) =>
-            labels(i)(j).setText(tile.toString)
-          }
-        }
+        setTiles()
       }
       else if (c == 's') {
         solve()
+      }
+      else if (c == 'r') {
+        board = Board(board.autoValidate)
+        setTiles()
       }
     })
 

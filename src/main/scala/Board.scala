@@ -75,6 +75,8 @@ class Board(val tiles: List[List[Char]], val fixedTiles: List[List[Char]], val a
 object Board {
   def apply(): Board = Board(List.tabulate(9, 9)((_, _) => ' '))
 
+  def apply(autoValidate: Boolean): Board = Board(List.tabulate(9, 9)((_, _) => ' '), autoValidate)
+
   def apply(tiles: List[List[Char]]): Board = {
     new Board(tiles, tiles)
   }
