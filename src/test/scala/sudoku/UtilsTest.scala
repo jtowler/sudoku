@@ -1,3 +1,5 @@
+package sudoku
+
 import org.scalatest.{FlatSpec, Matchers}
 
 class UtilsTest extends FlatSpec with Matchers {

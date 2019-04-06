@@ -1,3 +1,5 @@
+package sudoku
+
 import org.scalatest.{FlatSpec, Matchers}
 
 class BoardTest extends FlatSpec with Matchers {

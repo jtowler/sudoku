@@ -1,3 +1,5 @@
+package sudoku
+
 class Board(val tiles: List[List[Char]], val fixedTiles: List[List[Char]], val autoValidate: Boolean = false) {
 
   lazy val squares: List[List[Char]] = Utils.fromSquares(tiles)

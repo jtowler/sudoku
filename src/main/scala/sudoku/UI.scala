@@ -1,5 +1,8 @@
+package sudoku
+
 import javafx.application.Application
 import javafx.scene.Scene
+import javafx.scene.input.KeyCode
 import javafx.scene.layout.AnchorPane
 import javafx.scene.shape.Line
 import javafx.scene.text.Text
@@ -43,10 +46,9 @@ class UI extends Application {
       clickY = (x.getSceneY / tileSize).toInt
     })
 
-
     val scene = new Scene(root, fullSize, fullSize)
     scene.setOnKeyReleased(k => {
-      val c = k.getText.head
+      val c = k.getText.headOption.getOrElse(' ')
       if (c.isDigit & clickX >= 0 && clickY >= 0) {
         board = board.update(clickX, clickY, c)
         setTiles()
@@ -57,6 +59,9 @@ class UI extends Application {
       else if (c == 'r') {
         board = Board(board.autoValidate)
         setTiles()
+      }
+      if (k.getCode==KeyCode.ESCAPE) {
+        System.exit(0)
       }
     })
 

@@ -1,3 +1,5 @@
+package sudoku
+
 import scala.io.StdIn
 
 object Game {

@@ -1,3 +1,5 @@
+package sudoku
+
 object Examples {
 
   val easy = List(

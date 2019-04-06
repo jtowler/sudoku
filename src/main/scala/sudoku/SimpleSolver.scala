@@ -1,3 +1,5 @@
+package sudoku
+
 object SimpleSolver {
 
   def fillInOnes(tiles: List[List[Char]]): List[List[Char]] = {
